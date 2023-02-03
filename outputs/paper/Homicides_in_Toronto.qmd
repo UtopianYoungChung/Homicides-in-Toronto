@@ -199,6 +199,8 @@ Homicides_compare_filtered%>%
 
 As shown in @fig-bar2, the numbers of police dispatch are measured per division. Interestingly, these numbers are much higher than the actual homicides across the divisions. In this graph, Division 31 leads the number and D51 the second. Interestingly, as shown below, the leading homicide occurrences are in Division 51 ('Cabbagetown-South St.James Town', 'Church-Yonge Corridor', 'Moss Park') and Division 31 ('Black Creek', 'Downsview-Roding-CFB', 'Glenfield-Jane Heights'), respectively. The discrepancy between these two data raises an interesting question.
 
+\newpage
+
 # Conclusion
 
 Is there a correlation between poor neighbourhoods and homicide occurrence? The answer is maybe not. As shown in @fig-bar3, Division51, whose jurisdiction is in the rich neighbourhoods - 'Bay Street Corridor', 'Church-Yonge Corridor', 'Moss Park', and 'Regent Park' - is leading the homicide occurrence in Toronto. This finding strongly suggests that there may be a positive relationship between income level and homicide. This finding contradicts the paper's hypothesis.
