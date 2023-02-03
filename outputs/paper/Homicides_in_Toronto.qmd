@@ -7,7 +7,7 @@ format:
   pdf:
     documentclass: article
     geometry: margin = 1in
-    abstract: Toronto has experienced a high number of homicides. This paper analyzed opendatatoronto data regarding homicides in Toronto. This paper analyzed the data, including the Occurrence Year, Homicide Type (Shootings, Stabbings, and other types), and Neighborhood, with extra attention. One interesting aspect of the analysis is that the number of gun shootings in Toronto has always been high, and this hasn't changed over the course of 19 years. This paper focuses on neighbourhoods with 20 or more homicides to determine correlation between neighbourhoods and homicide occurences in Toronto.
+    abstract: There have been numerous homicides in Toronto. This paper examined homicide data from opendatatoronto. The extracted data included the Occurrence Year, Homicide Type (Shootings, Stabbings, etc.), and Neighborhood. An interesting aspect of the analysis is that the number of homicides in Toronto has remained constant over the past 16 years, despite being historically high. This paper investigates the relationship between Toronto neighbourhoods with 20 or more homicides and the occurrence of homicides over time.
     toc: true
     number-sections: true
     colorlinks: true
