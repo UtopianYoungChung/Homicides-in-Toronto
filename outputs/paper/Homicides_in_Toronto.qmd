@@ -1,5 +1,5 @@
 ---
-title: "Homicides in Toronto: A Data Analysis"
+title: "A Relationship between Income Level and Homicides in Toronto: A Data Analysis"
 author: "Joseph Chung"
 date: today
 date-format: "MMM D, YYYY"
@@ -7,7 +7,7 @@ format:
   pdf:
     documentclass: article
     geometry: margin = 1in
-    abstract: Toronto has experienced a high number of homicides. This paper analyzed opendatatoronto data regarding homicides in Toronto. This paper analyzed the data, including the Occurrence Year, Homicide Type (Shootings, Stabbings, and other types), and Neighborhood, with extra attention. One interesting aspect of the analysis is that the number of gun shootings in Toronto has always been high, and this hasn't changed over the course of 19 years. This paper focuses on neighbourhoods with 20 or more homicides to determine whether or not there is a correlation with the data.
+    abstract: Toronto has experienced a high number of homicides. This paper analyzed opendatatoronto data regarding homicides in Toronto. This paper analyzed the data, including the Occurrence Year, Homicide Type (Shootings, Stabbings, and other types), and Neighborhood, with extra attention. One interesting aspect of the analysis is that the number of gun shootings in Toronto has always been high, and this hasn't changed over the course of 19 years. This paper focuses on neighbourhoods with 20 or more homicides to determine correlation between neighbourhoods and homicide occurences in Toronto.
     toc: true
     number-sections: true
     colorlinks: true
@@ -133,12 +133,15 @@ The leading neighbourhoods in homicides are apparent now. The bar for Malvern (1
 
 As shown in @tbl-dataextract, each observation tells us the number of homicides that occur in a specific neighbourhood, based on the geographical boundaries described above, on a certain day of the year. For example, the last observation seen in @tbl-dataextract tells us that on 2015-11-10, a homicide occurred with an unclassified (other) method of murder in Clairlea-Brichmount. These data points can be analyzed together to tell us a story about homicide incidents in Toronto.
 
+\newpage
+
 ```{r}
 #| messages: false
 #| echo: false
 #| warning: false
 #| label: tbl-yearlyhomicides
 #| tbl-cap: Yearly number of each homicide type
+#| tbl-colwidths: 15
 #Create a table that compares the number of homicide occurrences and the year in which they occurred
 #Use group_by function to group all the homicides in the same year together and show how many occurred
 homicides_each_year <- read_csv(here::here("inputs/data/homicides_each_year.csv"))
@@ -201,8 +204,6 @@ Homicides_compare_filtered%>%
 
 As shown in @fig-bar2, the numbers of police dispatch are measured per division. Interestingly, these numbers are much higher than the actual homicides across the divisions. In this graph, Division 31 leads the number and D51 the second. Interestingly, as shown below, the leading homicide occurrences are in Division 51 ('Cabbagetown-South St.James Town', 'Church-Yonge Corridor', 'Moss Park') and Division 31 ('Black Creek', 'Downsview-Roding-CFB', 'Glenfield-Jane Heights'), respectively. The discrepancy between these two data raises an interesting question.
 
-\newpage
-
 # Conclusion
 
 Is there a correlation between poor neighbourhoods and homicide occurrence? The answer is maybe not. As shown in @fig-bar3, Division51, whose jurisdiction is in the rich neighbourhoods - 'Bay Street Corridor', 'Church-Yonge Corridor', 'Moss Park', and 'Regent Park' - is leading the homicide occurrence in Toronto. This finding strongly suggests that there may be a positive relationship between income level and homicide. This finding contradicts the paper's hypothesis.
@@ -210,6 +211,5 @@ Is there a correlation between poor neighbourhoods and homicide occurrence? The 
 This paper started with the hypothesis: 'Low-income neighbourhood leads the homicide occurrence in Toronto and, therefore, there is a negative relationship between the two'. However, based on the analysis of the findings in this paper, there is enough evidence to reject the hypothesis. Therefore, the bias that homicide occurrence in poor neighbourhoods is not true, and it has no relationship to homicide. Furthermore, this paper revealed an interesting aspect that is worth mentioning. This paper concludes with a remark: "there might be a positive relationship between income level and homicides - as income level goes up, the homicide rate also goes up."
 
 \newpage
-
 
 # Bibliography
