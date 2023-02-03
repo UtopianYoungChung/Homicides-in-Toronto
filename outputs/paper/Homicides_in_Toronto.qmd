@@ -1,0 +1,203 @@
+---
+title: "Homicides in Toronto: A Data Analysis"
+author: "Joseph Chung"
+date: today
+date-format: "MMM D, YYYY"
+format:
+  pdf:
+    documentclass: article
+    geometry: margin = 1in
+    abstract: Toronto has experienced a high number of homicides. This paper analyzed opendatatoronto data regarding homicides in Toronto. This paper analyzed the data, including the Occurrence Year, Homicide Type (Shootings, Stabbings, and other types), and Neighborhood, with extra attention. One interesting aspect of the analysis is that the number of gun shootings in Toronto has always been high, and this hasn't changed over the course of 19 years. This paper focuses on neighbourhoods with 20 or more homicides to determine whether or not there is a correlation with the data.
+    toc: true
+    number-sections: true
+    colorlinks: true
+    lof : true
+    lot : true
+thanks: "Code and data are available at: https://github.com/UtopianYoungChung/Homicides-in-Toronto.git"
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = FALSE)
+#Load libraries
+library(tidyverse)
+library(palmerpenguins)
+library(knitr)
+library(opendatatoronto)
+library(ggplot2)
+```
+
+# Introduction
+
+Canada is regarded as one of the safest and most peaceful places to live in the world. Nonetheless, Toronto's reputation is threatened by the high number of homicides. Although the overall crime rate in Canada has decreased by about 30 percent over the past two decades [@citeStatista], there is no evidence that homicides have decreased. This fact prompted questions about Toronto and its significance.
+
+This paper used R [@citeR] to analyze a dataset from opendatatoronto [@citeODT] on homicide occurrences in Toronto to get a better idea of how exactly homicides have differed in Toronto recently and tell a story about these changes. The analyzed dataset contains observations on how many homicides occurred each year in each Neighborhood from 2004-2020. Using tables and useful visualizations like scatter plots and bar graphs, the trends of homicide occurrences in Toronto could be seen. It was discovered that homicide occurrences in Toronto have constantly been high over the years; most of all, gun shootings have been the highest. It was also found that the high number of occurrences of homicide remained true for all areas.
+
+These findings have implications for them. There might be a positive correlation between certain races and income levels, resulting in the concentration of Blacks and other people of colour in low-income neighbourhoods [@citeGelman]. This claim might indicates a correlation between income levels and homicide occurrences [@citeBronner]. Nevertheless, the homicides across the city will continuously remain high unless a proper social programs are implemented. The purpose of this paper is to provide the semantic information of the data to help in developing such social programs.
+
+The rest of this paper will be as follows: @sec-data Data goes over the dataset being used and analyzes it with the use of tables and figures to tell a story about homicides in Toronto.
+
+# Data {#sec-data}
+
+The dataset used in this paper was taken from the City of Toronto's open data portal using the open data Toronto package [@citeODT]. It is a subset of a larger data collection called The Toronto Police Services Annual Statistical Report. This report contains data based on police-related topics, including various types of crimes and other incidents, and administrative information. The dataset that will be analyzed draws from the "Homicides Occurrence" portion of the annual statistical report. It contains all Toronto homicide incidents between 2004 and 2020. A homicide occurs when a person directly or indirectly, by any means, causes the death of another human being.
+
+The data is collected by Policemen through the Toronto Police system. Any time an officer reports a homicide, the report goes into the system and is added as an observation in the overall dataset. This data is the population of all police-reported homicide incidents by their definition. However, it could also be considered as a sample of all homicide incidents considering there are deaths by criminal negligence, accidental or justifieable homicide. As the dataset is made up of observations that follow a specific definition, it helps to avoid many of the biases we typically see in datasets, as there is less subjectivity. The system Toronto Police allows for this dataset to be very reliable and trustworthy. Toronto Police take high measurement to uphold the integrity of the data. This can be noticed by their Public Data Safety Portal [@citeTSDP], and thus the dataset this report is working with is reliable.
+
+Despite this, the data does not come without any implications. Considering we are working with crime and police data, there are historically many social and cultural issues that impact our data and make it slightly biased, and thus must be considered from an ethical perspective [@citeCrawford]. As most are aware, there have been a lot of biases compiled over the years, such as a claim that low-income neighbourhoods have the highest homicide incidents. Studies have shown that in the USA, social and spatial incarceration of young males has become part of the developmental ecology of adolescence in the nation's poorest neighbourhoods [@citeFagan]. This fact may be applies in Toronto as well, as the high crime category includes 25% of patrol zones with the highest crime rates; there is a positive relationship between community crime and the number of Special Investigations Unit investigations [@citeWortley]. According to Wortley, community crime level may be an important predictor of police use of force. However, it is also important to note that Special Investigations Unit investigations and use of force cases happen in low-crime and high-crime patrol zones [@citeWortley]. As shown below, the number of Police dispatch is highest in low-income neighbourhoods (Division 31), whereas the number of homicides is spread across the city. This fact raises the question that the police might likely have a slight biased on homicide incidents in these neighbourhoods. This means that our data comes from a biased sample as opposed to a full one, as the police and their biases have affected the observations in our dataset [@citeBronner]. One may argue that this bias is less likely to occur since the data was taken from Toronto.
+
+To understand and to conduct an appropriate approach on the subject, this paper analyzed the data in R [@citeR], using packages such as Tidyverse [@citeTidyverse], Dplyr [@citeDplyr], and Knitr [@citeKnitr] to produce tables and figures that tell us important information about the dataset and can be used to tell a story about homicide occurrences in Toronto.
+
+```{r}
+#| messages: false
+#| echo: false
+#| warning: false
+#| label: tbl-dataextract
+#| tbl-cap: 12 observations from dataset of Homicide occurences in Toronto
+
+#Load in dataset
+homicides_unclean <- read_csv(here::here("inputs/data/homicides_data_unclean.csv"))
+
+#Show a brief extract of the dataset by selecting 12 observations in a table
+homicides_unclean %>% 
+  slice(1,18,78,101,190,237,354,455,572,673,790,891) %>%
+  select(Occurrence_Date, Homicide_Type, Neighbourhood) %>%
+  kable(
+    caption= "12 Observations from dataset of Homicide occurences in Toronto",
+    col.names = c("Year", "Type", "Neighbourhood"),
+    booktabs = TRUE,
+    linesep = "",
+    align = c('c', 'c', 'c')
+  )
+show_col_types = FALSE
+  
+```
+
+@tbl-dataextract shows an extract of 12 data points from the overall dataset, which contains 1166 observations. Two observations from each year are shown in the extract. The original data had 10 variables. As shown, it was narrowed down to the three main variables, plus one identifier variable was kept for organizational purposes. These three important variables that will be worked with in the paper are 'Year', 'Neighbourhood', 'Homicide types', and 'Number of homicides', which are 'Occurred_year', 'Neighbourhood', and 'Homicide_Type', respectively, in the dataset.
+
+Occurred year is fairly self-explanatory and is the year in which all the homicides in an observation took place. It is a numerical variable. The neighbourhood is a categorical variable representing each neighbourhood's geographically determined area boundaries. The number of homicides is a numerical variable that counts the number of Homicide_Type corresponding to each observation. @fig-scatter shows the number of homicide types over 16 years in Toronto.
+
+```{r}
+#| messages: false
+#| echo: false
+#| warning: false
+#| label: fig-scatter
+#| fig-cap: The number of homicides types over 16 years in Toronto
+
+#Create a scatterplot to show each observation in the dataset, showing the number of homicide types
+#Colour the points based on the type where the homicides have occurred
+homicides_count <- read_csv(here::here("inputs/data/homicides_count.csv"))
+
+homicides_count%>%
+  ggplot(aes(Occurrence_year, ID  , colour = Homicide_Type)) +
+  geom_point() +
+  theme_bw() +
+  theme(legend.key.size = unit(0.5, 'cm'))+
+  labs(x = "Year",
+       y = "Number of Homicide",
+       color = "Homicide Type"
+       )
+```
+
+Plotting every single observation in the dataset gives us a better idea about the trend for Toronto's homicide occurrences and also allows us to compare each homicide type. However, the plot points for each year seem to have no pattern. Therefore, one can conclude that the number of homicides in Toronto would remain high with no signs of decreasing.
+
+Next, this paper projected a bar plot to visualize the relationship between the neighbourhood and the number of homicides @fig-bar1.
+
+@fig-bar1 also depicts the number of homicide types in each neighbourhood more evident. Every coloured section representing the neighbourhood contains more information, and it is worth looking at these deeper.
+
+```{r}
+#| messages: false
+#| echo: false
+#| warning: false
+#| label: fig-bar1
+#| fig-cap: The number of homicides in each neighbourhood
+#Create a bar plot to compare the number of homicides to the neighbourhood in which they occurred
+#Make each bar be broken up into coloured sections, using fill, to represent the neighbourhood in which a certain amount of homicides occurred in each neighbourhood
+Homicides_high <- read_csv(here::here("inputs/data/homicides_high.csv"))
+
+Homicides_high%>%
+  ggplot(aes(x = Neighbourhood, y = total, fill = Neighbourhood)) + 
+  geom_bar(stat='identity') +
+  theme_bw() +
+  theme(legend.key.size = unit(0.5, 'cm'), axis.text.x=element_blank())+
+  labs(x = "Neighbourhood",
+       y = "Number of Homicides",
+       fill = "Neighnourhood"
+       ) 
+```
+
+The leading neighbourhoods in homicides are apparent now. The bar for Malvern (132) is much higher than for Church-Yonge Corridor (75). According to MLS Toronto, the average household income is \$72,330, with a median age of 38.9 years in the Malvern neighbourhood [@citeMLS]. In Church-Yonge Corridor, the average household income is \$403,902, and the median age group is 43.5 [@citeMLS]. Comparing these two neighbourhoods, it is not a far stretch that the homicide occurrence rates are related to house income. However, is there any other evidence to support the claim of the negative relationship between household income and the rates of homicide occurrence? This paper took one more dataset to look closely at the subject.
+
+As shown in @tbl-dataextract, each observation tells us the number of homicides that occur in a specific neighbourhood, based on the geographical boundaries described above, on a certain day of the year. For example, the last observation seen in @tbl-dataextract tells us that on 2015-11-10, a homicide occurred with an unclassified (other) method of murder in Clairlea-Brichmount. These data points can be analyzed together to tell us a story about homicide incidents in Toronto.
+
+```{r}
+#| messages: false
+#| echo: false
+#| warning: false
+#| label: tbl-yearlyhomicides
+#| tbl-cap: Yearly number of each homicide type
+#Create a table that compares the number of homicide occurrences and the year in which they occurred
+#Use group_by function to group all the homicides in the same year together and show how many occurred
+homicides_count <- read_csv(here::here("inputs/data/homicides_count.csv"))
+
+homicides_count%>%
+  kable(
+    caption= "Number of Homicides in Toronto each year from 2004-2020",
+    col.names = c("No.", "Year", "Homicide Type", "Count of Each Type"),
+    booktabs = TRUE,
+    show_col_types = FALSE,
+    linesep = "",
+    align = c('c', 'c', 'c', 'c')
+  )
+```
+
+By grouping the data by year, @tbl-yearlyhomicides shows how many homicides have occurred each year in Toronto. It can be seen that homicides with gun shootings are dominantly higher than other methods. For the most part, shootings are always leading the numbers each year. This fact should be taken into consideration when developing related social programs accordingly.
+
+```{r}
+#| messages: false
+#| echo: false
+#| warning: false
+#| label: fig-bar2
+#| fig-cap: The number of Police dispatch across Divions
+
+#Create a bar plot to compare the number of Police dispatch to the neighbourhood in which they occurred
+
+Homicides_vs_division <- read_csv(here::here("inputs/data/homicides_vs_division.csv"))
+
+Homicides_vs_division%>%
+  ggplot(aes(x = Division, y = count_division)) + 
+  geom_bar(stat='identity') +
+  theme_bw() +
+  theme(legend.key.size = unit(0.5, 'cm'))+
+  labs(x = "Division",
+       y = "Number of Police Dispatch"
+       )
+```
+
+```{r}
+#| messages: false
+#| echo: false
+#| warning: false
+#| label: fig-bar3
+#| fig-cap: The number of homicides in each Division
+#| fig-width: 8
+#Create a bar plot to compare the number of homicides to the neighbourhood in which they occurred
+#Make each bar be broken up into coloured sections, using fill, to represent the neighbourhood in which a certain amount of homicides occurred in each neighbourhood
+Homicides_compare_filtered<- read_csv(here::here("inputs/data/homicides_compare_filtered.csv"))
+
+Homicides_compare_filtered%>%
+  ggplot(aes(x = Division, y = ID, fill = Neighbourhood)) + 
+  geom_bar(stat='identity') +
+  theme_bw() +
+  theme(legend.key.size = unit(0.5, 'cm'))+
+  labs(x = "Neighbourhood",
+       y = "Number of Homicides",
+       fill = "Neighbourhood") 
+```
+
+As shown in @fig-bar2, the numbers of police dispatch are measured per division. Interestingly, these numbers are much higher than the actual homicides across the divisions. In this graph, Division 31 leads the number and D51 the second. Interestingly, as shown below, the leading homicide occurrences are in Division 51 ('Cabbagetown-South St.James Town', 'Church-Yonge Corridor', 'Moss Park') and Division 31 ('Black Creek', 'Downsview-Roding-CFB', 'Glenfield-Jane Heights'), respectively. The discrepancy between these two data raises an interesting question.
+
+Is there a correlation between poor neighbourhoods and homicide occurrence? The answer is maybe not. As shown in @fig-bar3, Division51, whose jurisdiction is the rich neighbourhoods - 'Bay Street Corridor', 'Church-Yonge Corridor', 'Moss Park', and 'Regent Park' - in the city is leading the homicide occurrence in Toronto. This finding strongly suggests that there may be a positive relationship between income level and homicide. This finding contradicts the paper's hypothesis.
+
+This paper started with the hypothesis: 'Low-income neighbourhood leads the homicide occurrence in Toronto and, therefore, there is a negative relationship between the two'. However, based on the analysis of the findings in this paper, there is enough evidence to reject the hypothesis. Therefore, the bias that homicide occurrence in poor neighbourhoods has no relationship to homicide. Furthermore, this paper revealed an interesting aspect that is worth mentioning. There might be a positive relationship between income level and homicides: as income level goes up, the homicide rate goes up.
+
+# Bibliography
