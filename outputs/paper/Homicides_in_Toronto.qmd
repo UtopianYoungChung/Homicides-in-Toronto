@@ -100,6 +100,8 @@ homicides_count%>%
 
 Plotting every single observation in the dataset gives us a better idea about the trend for Toronto's homicide occurrences and also allows us to compare each homicide type. However, the plot points for each year seem to have no pattern. Therefore, one can conclude that the number of homicides in Toronto would remain high with no signs of decreasing.
 
+\newpage
+
 Next, this paper projected a bar plot to visualize the relationship between the neighbourhood and the number of homicides @fig-bar1.
 
 @fig-bar1 also depicts the number of homicide types in each neighbourhood more evident. Every coloured section representing the neighbourhood contains more information, and it is worth looking at these deeper.
