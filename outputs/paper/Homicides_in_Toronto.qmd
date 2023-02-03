@@ -109,6 +109,8 @@ Next, this paper projected a bar plot to visualize the relationship between the 
 #| echo: false
 #| warning: false
 #| label: fig-bar1
+#| fig-width: 8
+#| fig-height: 5
 #| fig-cap: The number of homicides in each neighbourhood
 #Create a bar plot to compare the number of homicides to the neighbourhood in which they occurred
 #Make each bar be broken up into coloured sections, using fill, to represent the neighbourhood in which a certain amount of homicides occurred in each neighbourhood
@@ -137,16 +139,16 @@ As shown in @tbl-dataextract, each observation tells us the number of homicides 
 #| tbl-cap: Yearly number of each homicide type
 #Create a table that compares the number of homicide occurrences and the year in which they occurred
 #Use group_by function to group all the homicides in the same year together and show how many occurred
-homicides_count <- read_csv(here::here("inputs/data/homicides_count.csv"))
+homicides_each_year <- read_csv(here::here("inputs/data/homicides_each_year.csv"))
 
-homicides_count%>%
+homicides_each_year%>%
   kable(
     caption= "Number of Homicides in Toronto each year from 2004-2020",
-    col.names = c("No.", "Year", "Homicide Type", "Count of Each Type"),
+    col.names = c("No.", "Year", "Other", "Shooting", "Stabbing"),
     booktabs = TRUE,
     show_col_types = FALSE,
     linesep = "",
-    align = c('c', 'c', 'c', 'c')
+    align = c('c', 'c', 'c', 'c', 'c')
   )
 ```
 
@@ -180,6 +182,7 @@ Homicides_vs_division%>%
 #| label: fig-bar3
 #| fig-cap: The number of homicides in each Division
 #| fig-width: 8
+#| fig-height: 5
 #Create a bar plot to compare the number of homicides to the neighbourhood in which they occurred
 #Make each bar be broken up into coloured sections, using fill, to represent the neighbourhood in which a certain amount of homicides occurred in each neighbourhood
 Homicides_compare_filtered<- read_csv(here::here("inputs/data/homicides_compare_filtered.csv"))
@@ -196,8 +199,13 @@ Homicides_compare_filtered%>%
 
 As shown in @fig-bar2, the numbers of police dispatch are measured per division. Interestingly, these numbers are much higher than the actual homicides across the divisions. In this graph, Division 31 leads the number and D51 the second. Interestingly, as shown below, the leading homicide occurrences are in Division 51 ('Cabbagetown-South St.James Town', 'Church-Yonge Corridor', 'Moss Park') and Division 31 ('Black Creek', 'Downsview-Roding-CFB', 'Glenfield-Jane Heights'), respectively. The discrepancy between these two data raises an interesting question.
 
-Is there a correlation between poor neighbourhoods and homicide occurrence? The answer is maybe not. As shown in @fig-bar3, Division51, whose jurisdiction is the rich neighbourhoods - 'Bay Street Corridor', 'Church-Yonge Corridor', 'Moss Park', and 'Regent Park' - in the city is leading the homicide occurrence in Toronto. This finding strongly suggests that there may be a positive relationship between income level and homicide. This finding contradicts the paper's hypothesis.
+# Conclusion
 
-This paper started with the hypothesis: 'Low-income neighbourhood leads the homicide occurrence in Toronto and, therefore, there is a negative relationship between the two'. However, based on the analysis of the findings in this paper, there is enough evidence to reject the hypothesis. Therefore, the bias that homicide occurrence in poor neighbourhoods has no relationship to homicide. Furthermore, this paper revealed an interesting aspect that is worth mentioning. There might be a positive relationship between income level and homicides: as income level goes up, the homicide rate goes up.
+Is there a correlation between poor neighbourhoods and homicide occurrence? The answer is maybe not. As shown in @fig-bar3, Division51, whose jurisdiction is in the rich neighbourhoods - 'Bay Street Corridor', 'Church-Yonge Corridor', 'Moss Park', and 'Regent Park' - is leading the homicide occurrence in Toronto. This finding strongly suggests that there may be a positive relationship between income level and homicide. This finding contradicts the paper's hypothesis.
+
+This paper started with the hypothesis: 'Low-income neighbourhood leads the homicide occurrence in Toronto and, therefore, there is a negative relationship between the two'. However, based on the analysis of the findings in this paper, there is enough evidence to reject the hypothesis. Therefore, the bias that homicide occurrence in poor neighbourhoods is not true, and it has no relationship to homicide. Furthermore, this paper revealed an interesting aspect that is worth mentioning. This paper concludes with a remark: "there might be a positive relationship between income level and homicides - as income level goes up, the homicide rate also goes up."
+
+\newpage
+
 
 # Bibliography
