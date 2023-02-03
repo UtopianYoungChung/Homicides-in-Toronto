@@ -20,6 +20,8 @@ homicides_cleaned <- read_csv(here::here("inputs/data/homicides_data_unclean.csv
 homicides_cleaned %>%  
   select(Occurrence_year, Homicide_Type,Neighbourhood)
 head(homicides_cleaned)
+
+
 #### Test the homicides_cleaned dataset ####
 homicides_cleaned$Occurrence_year |> min() == 2004
 homicides_cleaned$Occurrence_year |> max() == 2020
