@@ -4,8 +4,8 @@
 
 -   [Summary](https://github.com/UtopianYoungChung/Homicides-in-Toronto#summary)
 
--   [Code](https://github.com/ossu/computer-science#community#code)
+-   [Code](https://github.com/UtopianYoungChung/Homicides-in-Toronto#code)
 
--   [Data](https://github.com/ossu/computer-science#community#data)
+-   [Data](https://github.com/UtopianYoungChung/Homicides-in-Toronto#data)
 
--   [Closing Remark](https://github.com/ossu/computer-science#community#closing remark)
+-   [Closing Remark](https://github.com/UtopianYoungChung/Homicides-in-Toronto#closing remark)
