@@ -7,7 +7,7 @@ format:
   pdf:
     documentclass: article
     geometry: margin = 1in
-    abstract: There have been numerous homicides in Toronto. This paper examined homicide data from opendatatoronto. The extracted data included the Occurrence Year, Homicide Type (Shootings, Stabbings, others.), and Neighborhood. An interesting aspect of the analysis is that the number of homicides in Toronto has remained constantly high with no apparent pattern, over the past 16 years. This paper investigates the relationship between Toronto neighbourhoods with 20 or more homicides and the income level.
+    abstract: In Toronto, there have been many homicides. This paper examined data from opendatatoronto regarding homicides. The extracted information included Occurrence Year, Homicide Type (Shootings, Stabbings, etc.), and Neighborhood. Over the past sixteen years, Toronto's homicide rate has remained high with no particular pattern, which is an intriguing aspect of the analysis. This study found no correlation between income and homicide in Toronto neighbourhoods with 20 or more homicides. This study also discovered that wealthy neighbourhoods had more homicides than poor ones. This is a significant finding that can assist the police department in distributing personnel accordingly.
     toc: true
     number-sections: true
     colorlinks: true
@@ -33,7 +33,7 @@ Canada is regarded as one of the safest and most peaceful places to live in the 
 
 This paper used R [@citeR] to analyze a dataset from opendatatoronto [@citeODT] on homicide occurrences in Toronto to better understand how exactly homicides have differed in Toronto recently and tell a story about these changes. The analyzed dataset contains observations on how many homicides occurred each year in each Neighborhood from 2004-2020. Using tables and useful visualizations like scatter plots and bar graphs, the trends of homicide occurrences in Toronto could be seen. It was discovered that homicide occurrences in Toronto have constantly been high over the years; most of all, gun shootings have been the highest. It was also found that the high number of occurrences of homicide remained true for all areas.
 
-These findings have implications for them. There might be a positive correlation between certain races and income levels, resulting in the concentration of Blacks and other people of colour in low-income neighbourhoods [@citeGelman]. This claim might indicate a correlation between income levels and homicide occurrences [@citeBronner]. Nevertheless, the number of homicides across the city will continuously remain high unless proper social programs are implemented. This paper aims to provide the semantic information of the data to help develop such social programs.
+These findings have implications for them. There might be a positive correlation between certain races and income levels, resulting in the concentration of Blacks and other people of colour in low-income neighbourhoods [@citeGelman]. This claim might indicate a correlation between income levels and homicide occurrences [@citeBronner]. However, this paper did not find any correlation between poor neighbourhoods and homicide occurrences; instead, it discovered that wealthy neighbourhoods had the highest homicide occurrences in Toronto. Nevertheless, the number of homicides across the city will continuously remain high unless proper social programs are implemented. This paper aims to provide the semantic information of the data to help develop such social programs to prevent higher homicide occurrences in Toronto.
 
 The rest of this paper will be as follows: @sec-data Data goes over the dataset being used and analyzes it using tables and figures to tell a story about homicides in Toronto.
 
@@ -165,7 +165,7 @@ By grouping the data by year, @tbl-yearlyhomicides shows how many homicides have
 #| echo: false
 #| warning: false
 #| label: fig-bar2
-#| fig-cap: The number of Police dispatch across Divions
+#| fig-cap: The number of Police dispatched across Divisions
 
 #Create a bar plot to compare the number of Police dispatch to the neighbourhood in which they occurred
 
