@@ -205,7 +205,7 @@ Homicides_compare_filtered%>%
        fill = "Neighbourhood") 
 ```
 
-As shown in @fig-bar2, the numbers of police dispatch are measured per division. Interestingly, these numbers are much higher than the actual homicides across the divisions. In this graph, Division 31 leads the number and D51 the second. Interestingly, as shown abow, the leading homicide occurrences are in Division 51 ('Cabbagetown-South St.James Town', 'Church-Yonge Corridor', 'Moss Park') and Division 31 ('Black Creek', 'Downsview-Roding-CFB', 'Glenfield-Jane Heights'), respectively. The discrepancy between these two data raises an interesting question.
+As shown in @fig-bar2, the numbers of police dispatch are measured per division. Interestingly, these numbers are much higher than the actual homicides across the divisions. In this graph, Division 31 leads the number and D51 the second. Interestingly, as shown above, the leading homicide occurrences are in Division 51 ('Cabbagetown-South St.James Town', 'Church-Yonge Corridor', 'Moss Park') and Division 31 ('Black Creek', 'Downsview-Roding-CFB', 'Glenfield-Jane Heights'), respectively. The discrepancy between these two data raises an interesting question.
 
 # Conclusion
 
