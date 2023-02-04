@@ -61,9 +61,9 @@ Homicides_compare <- homicides_cleaned %>%
   group_by(Division) %>%
   dplyr:: count(Neighbourhood, name = 'ID')
 
-### Filter Homicides_compare >= 20 ###
+### Filter Homicides_compare >= 15 ###
 Homicides_compare_filtered <- Homicides_compare%>%
-  filter(ID >= 20)
+  filter(ID >= 15)
 
 
 #### Save the data in our inputs folder in case the data is removed or
