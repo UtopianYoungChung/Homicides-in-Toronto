@@ -23,10 +23,10 @@ head(homicides_cleaned)
 #### Test the homicides_cleaned dataset ####
 homicides_cleaned$Occurrence_year |> min() == 2004
 homicides_cleaned$Occurrence_year |> max() == 2020
-homicides_cleaned$Division |> class() == "string"
-homcidies_cleaned$Division |>
+homicides_cleaned$Occurrence_year |> class() == "numeric"
+homicides_cleaned$Occurrence_year |>
   unique() |>
-  length() == 51
+  length() == 1166
 
 
 ### Group by Occurrence year and count the numbers ###
